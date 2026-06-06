@@ -95,32 +95,80 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
-      <div className={`md:hidden fixed inset-0 top-[60px] z-40 bg-primary-dark/95 backdrop-blur-lg transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex flex-col gap-6 p-8 h-full">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
-            return (
-              <Link 
-                key={link.name} 
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className={`font-heading text-2xl font-semibold border-b border-white/5 pb-3 transition-colors duration-200 ${isActive ? 'text-accent border-accent/20' : 'text-white/90 hover:text-accent'}`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-          <a 
-            href="https://wa.me/919512499032?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20your%20travel%20packages." 
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-white font-body text-base font-bold py-3.5 rounded-full mt-4 transition-all duration-300"
-          >
-            <WhatsAppIcon size={18} />
-            Book Free Trial
-          </a>
+      {/* Mobile Drawer (Full Screen Modal Overlay) */}
+      <div className={`md:hidden fixed inset-0 z-50 bg-gradient-to-b from-primary-dark via-primary-dark/98 to-primary/95 backdrop-blur-xl transform transition-all duration-300 ${isOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+        
+        {/* Background glow accents */}
+        <div className="absolute top-[-10%] left-[-10%] w-[300px] h-[300px] rounded-full bg-accent/15 blur-[80px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full bg-primary-light/20 blur-[80px] pointer-events-none" />
+
+        <div className="flex flex-col h-full justify-between p-6 sm:p-8 relative z-10">
+          
+          {/* Header row inside drawer */}
+          <div className="flex items-center justify-between pb-6 border-b border-white/10">
+            <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3 group">
+              <div className="relative w-9 h-9 rounded-full overflow-hidden border border-accent/20 bg-white">
+                <Image 
+                  src="/logo.jpg" 
+                  alt="Safarhood Logo" 
+                  fill
+                  sizes="36px"
+                  className="object-cover"
+                />
+              </div>
+              <span className="font-heading text-lg font-bold tracking-wider text-white">
+                SAFAR<span className="text-accent">HOOD</span>
+              </span>
+            </Link>
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="text-white/80 hover:text-accent p-2.5 transition-colors duration-200 focus:outline-none bg-white/5 rounded-full border border-white/10"
+              aria-label="Close Menu"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Navigation Links List */}
+          <div className="flex flex-col gap-5 my-auto py-8">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+              return (
+                <Link 
+                  key={link.name} 
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`group flex items-center justify-between font-heading text-xl sm:text-2xl font-bold py-2.5 transition-all duration-200 ${isActive ? 'text-accent border-b border-accent/20 pb-2.5' : 'text-white/90 hover:text-accent border-b border-white/5 pb-2.5'}`}
+                >
+                  <span>{link.name}</span>
+                  <span className={`text-base transform transition-all duration-200 group-hover:translate-x-1.5 ${isActive ? 'text-accent opacity-100' : 'text-white/40 opacity-0 group-hover:opacity-100'}`}>
+                    ➔
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Footer Info Stack inside drawer */}
+          <div className="space-y-6">
+            <a 
+              href="https://wa.me/919512499032?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20your%20travel%20packages." 
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center justify-center gap-2.5 bg-accent hover:bg-accent-light text-white font-body text-base font-bold py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-accent/25 hover:shadow-accent/40 active:scale-[0.98]"
+            >
+              <WhatsAppIcon size={18} />
+              Book Free Trial
+            </a>
+            
+            {/* Quick base information */}
+            <div className="text-center space-y-2 pt-4 border-t border-white/5">
+              <p className="font-body text-[10px] text-white/50">Basecamp: Bhatwari, Uttarkashi, Uttarakhand</p>
+              <p className="font-body text-[10px] text-accent font-semibold">Hotline: +91 95124 99032 (WhatsApp / Call)</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </nav>
