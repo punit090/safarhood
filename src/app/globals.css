@@ -1,26 +1,89 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FAF8F5; /* Warm Cream */
+  --foreground: #1B2421; /* Charcoal */
+  --primary: #0F2D24;
+  --primary-dark: #071510;
+  --primary-light: #1A3E33;
+  --accent: #C0782E;
+  --accent-light: #D28E46;
+  --accent-dark: #A05F1C;
+  --cream: #FAF8F5;
+  --charcoal: #1B2421;
+  --muted-green: #5A736C;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-cream: var(--cream);
+  --color-charcoal: var(--charcoal);
+  --color-muted-green: var(--muted-green);
+  
+  --font-heading: var(--font-playfair), serif;
+  --font-body: var(--font-inter), sans-serif;
+  
+  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted-green);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Custom Glassmorphism Utility */
+.glass-nav {
+  background: rgba(15, 45, 36, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(15, 45, 36, 0.05);
+}
+
+.glass-card-dark {
+  background: rgba(15, 45, 36, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
