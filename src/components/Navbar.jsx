@@ -23,6 +23,21 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock scroll when mobile drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const navLinks = [
     { name: 'About Us', href: '/about' },
     { name: 'Tracks', href: '/tracks' },
@@ -87,7 +102,7 @@ export default function Navbar() {
             <button 
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle Menu"
-              className="text-white hover:text-accent p-2 transition-colors duration-200 focus:outline-none"
+              className="text-white hover:text-accent p-2 transition-colors duration-200 focus:outline-none cursor-pointer"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -95,14 +110,23 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer (Full Screen Modal Overlay) */}
-      <div className={`md:hidden fixed inset-0 z-50 bg-gradient-to-b from-primary-dark via-primary-dark/98 to-primary/95 backdrop-blur-xl transform transition-all duration-300 ${isOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
-        
-        {/* Background glow accents */}
-        <div className="absolute top-[-10%] left-[-10%] w-[300px] h-[300px] rounded-full bg-accent/15 blur-[80px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full bg-primary-light/20 blur-[80px] pointer-events-none" />
+      {/* Backdrop Overlay */}
+      <div 
+        className={`md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsOpen(false)}
+      />
 
-        <div className="flex flex-col h-full justify-between p-6 sm:p-8 relative z-10">
+      {/* Mobile Sidebar (Right-side slide-in drawer) */}
+      <div 
+        className={`md:hidden fixed top-0 right-0 bottom-0 z-50 w-[300px] sm:w-[360px] max-w-[85vw] h-screen h-[100dvh] overflow-y-auto border-l border-white/10 shadow-2xl transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        style={{
+          background: 'linear-gradient(to bottom, #071510 0%, #0f2d24 100%)',
+        }}
+      >
+        {/* Background glow accents */}
+        <div className="absolute top-[-10%] right-[-10%] w-[200px] h-[200px] rounded-full bg-accent/10 blur-[60px] pointer-events-none" />
+
+        <div className="flex flex-col min-h-full justify-between p-6 sm:p-8 relative z-10">
           
           {/* Header row inside drawer */}
           <div className="flex items-center justify-between pb-6 border-b border-white/10">
@@ -122,7 +146,7 @@ export default function Navbar() {
             </Link>
             <button 
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-accent p-2.5 transition-colors duration-200 focus:outline-none bg-white/5 rounded-full border border-white/10"
+              className="text-white/80 hover:text-accent p-2.5 transition-colors duration-200 focus:outline-none bg-white/5 rounded-full border border-white/10 cursor-pointer"
               aria-label="Close Menu"
             >
               <X size={20} />
