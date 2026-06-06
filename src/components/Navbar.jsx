@@ -130,7 +130,7 @@ export default function Navbar() {
           </div>
 
           {/* Navigation Links List */}
-          <div className="flex flex-col gap-5 my-auto py-8">
+          <div className="flex flex-col gap-4 mt-8 mb-auto py-4">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
               return (
@@ -150,7 +150,7 @@ export default function Navbar() {
           </div>
 
           {/* Footer Info Stack inside drawer */}
-          <div className="space-y-6">
+          <div className="space-y-4 pt-4">
             <a 
               href="https://wa.me/919512499032?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20your%20travel%20packages." 
               target="_blank"
