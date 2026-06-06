@@ -118,7 +118,7 @@ export default function Navbar() {
 
       {/* Mobile Sidebar (Right-side slide-in drawer) */}
       <div 
-        className={`md:hidden fixed top-0 right-0 bottom-0 z-50 w-[300px] sm:w-[360px] max-w-[85vw] h-screen h-[100dvh] overflow-y-auto border-l border-white/10 shadow-2xl transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`md:hidden fixed top-0 right-0 bottom-0 z-50 w-full h-screen h-[100dvh] overflow-y-auto overflow-x-hidden shadow-2xl transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full invisible'}`}
         style={{
           background: 'linear-gradient(to bottom, #071510 0%, #0f2d24 100%)',
         }}
